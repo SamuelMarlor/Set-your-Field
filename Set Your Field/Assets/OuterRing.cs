@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
 
-public class FielderPlacementManager : MonoBehaviour
+public class OuterRing : MonoBehaviour
 {
     public Camera cam;
     public GameObject fielderPrefab;
@@ -13,8 +13,11 @@ public class FielderPlacementManager : MonoBehaviour
     public int fieldersLeft = 9;
     public Transform batter;
     public TMP_Text fieldersRemainingText;
+    public FielderPlacementManager manager; // reference to global manager
+    public int FieldersOuterRing = 0;
+    public int FieldersOuterMax = 4;
 
-    public int fieldersPlaced = 0;
+    private int fieldersPlaced = 0;
     private List<GameObject> SpawnedFielders = new List<GameObject>();
 
     void Update()
@@ -27,16 +30,15 @@ public class FielderPlacementManager : MonoBehaviour
         fieldersRemainingText.text = fieldersLeft.ToString();
     }
 
-    public void RegisterPlacement()
-    {
-        fieldersLeft--;
-        fieldersPlaced++;
-    }
-
     void TryPlaceFielder()
     {
-        // Global limit
         if (fieldersPlaced >= maxFielders)
+            return;
+
+        if (FieldersOuterRing >= FieldersOuterMax)
+            return;
+
+        if (manager.fieldersLeft <= 0)
             return;
 
         Vector3 worldPos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -44,13 +46,21 @@ public class FielderPlacementManager : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
 
-        // Only place fielders if clicking the INNER RING
-        if (hit.collider == null || !hit.collider.CompareTag("InnerRing"))
+        if (hit.collider != null)
+        {
+            Debug.Log("Hit: " + hit.collider.name + " | Tag: " + hit.collider.tag);
+        }
+        else
+        {
+            Debug.Log("No collider hit");
+            return;
+        }
+
+        if (!hit.collider.CompareTag("OuterRing"))
             return;
 
         GameObject newFielder = Instantiate(fielderPrefab, worldPos, Quaternion.identity);
 
-        // Flip based on batter position
         Vector3 scale = newFielder.transform.localScale;
         if (newFielder.transform.position.x < batter.position.x)
             scale.x = Mathf.Abs(scale.x);
@@ -61,14 +71,14 @@ public class FielderPlacementManager : MonoBehaviour
 
         SpawnedFielders.Add(newFielder);
         fieldersPlaced++;
+        FieldersOuterRing++;
         fieldersLeft--;
+
+        manager.RegisterPlacement();
+
     }
 }
-    
-    //void PlaceFielder(FielZone zone)
-    //{
-    //    GameObject fielder = Instantiate(fielderPrefab, zone.transform.position, Quaternion.identity);
-    //    zone.isOccupied = true;
-    //    fieldersPlaced++;
-    //}
+
+
+
 

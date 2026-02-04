@@ -2,37 +2,28 @@ using UnityEngine;
 
 
 
-public class FielZone : MonoBehaviour
+public class Wicket : MonoBehaviour
 {
     public bool isOccupied = false;
+    public int F = 9;
     public SpriteRenderer highlight;
     public FielderPlacementManager inner;   // reference to global manager
 
     private bool mouseInside = false;
 
-    void Update()
-    {
-        // Update highlight live while mouse is inside
-        if (mouseInside)
-        {
-            Highlight();
-        }
-    }
+   
 
     public void Highlight()
     {
         if (highlight == null || inner == null)
             return;
 
-        
-        if (inner.fieldersPlaced >= inner.maxFielders)
+
+        if (F >= inner.maxFielders)
         {
             highlight.color = new Color(1f, 0f, 0f, 0.4f);   // RED
         }
-        else
-        {
-            highlight.color = new Color(1f, 1f, 0f, 0.4f);   // YELLOW
-        }
+        
     }
 
     public void Unhighlight()
