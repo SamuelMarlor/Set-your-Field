@@ -13,14 +13,20 @@ public class FielderPlacementManager : MonoBehaviour
     public int fieldersLeft = 9;
     public Transform batter;
     public TMP_Text fieldersRemainingText;
+    public UnityEngine.UI.Button confirmButton;
+    public ShortBallBounce ballScript;
+    public PlacedFielder pf;
 
     public int fieldersPlaced = 0;
     private List<GameObject> SpawnedFielders = new List<GameObject>();
+
+    
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             TryPlaceFielder();
         }
 
@@ -59,11 +65,30 @@ public class FielderPlacementManager : MonoBehaviour
 
         newFielder.transform.localScale = scale;
 
+       
+
         SpawnedFielders.Add(newFielder);
         fieldersPlaced++;
         fieldersLeft--;
+        pf.isInnerRing = true;
     }
+
+    public void ConfirmFielders()
+    {
+        if (fieldersPlaced < maxFielders)
+        {
+            Debug.Log("You must place all 9 fielders first.");
+            return;
+        }
+
+        // All fielders placed — start the ball
+        ballScript.StartBall();
+    }
+
+
 }
+        
+
     
     //void PlaceFielder(FielZone zone)
     //{

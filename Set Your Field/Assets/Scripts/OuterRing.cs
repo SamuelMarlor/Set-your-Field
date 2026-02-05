@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +15,8 @@ public class OuterRing : MonoBehaviour
     public TMP_Text fieldersRemainingText;
     public FielderPlacementManager manager; // reference to global manager
     public int FieldersOuterRing = 0;
-    public int FieldersOuterMax = 4;
+    public int FieldersOuterMax = 5;
+    public PlacedFielder pf;
 
     private int fieldersPlaced = 0;
     private List<GameObject> SpawnedFielders = new List<GameObject>();
@@ -27,7 +28,7 @@ public class OuterRing : MonoBehaviour
             TryPlaceFielder();
         }
 
-        fieldersRemainingText.text = fieldersLeft.ToString();
+       
     }
 
     void TryPlaceFielder()
@@ -60,6 +61,10 @@ public class OuterRing : MonoBehaviour
             return;
 
         GameObject newFielder = Instantiate(fielderPrefab, worldPos, Quaternion.identity);
+        PlacedFielder pf = newFielder.GetComponent<PlacedFielder>();
+        pf.manager = manager;
+        pf.outerRing = this;   // ← THIS is the important line
+
 
         Vector3 scale = newFielder.transform.localScale;
         if (newFielder.transform.position.x < batter.position.x)
@@ -70,9 +75,9 @@ public class OuterRing : MonoBehaviour
         newFielder.transform.localScale = scale;
 
         SpawnedFielders.Add(newFielder);
-        fieldersPlaced++;
         FieldersOuterRing++;
-        fieldersLeft--;
+        pf.isOuterRing = true;
+
 
         manager.RegisterPlacement();
 
