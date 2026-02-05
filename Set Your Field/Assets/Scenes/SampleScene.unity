@@ -311,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   batterPoint: {fileID: 458201531}
-  catchRadius: 1.5
+  catchRadius: 2
   catchChance: 0.6
   startPoint: {fileID: 765930919}
   isHighBall: 0
@@ -974,7 +974,7 @@ MonoBehaviour:
   fieldersRemainingText: {fileID: 1598611428}
   manager: {fileID: 579465044}
   FieldersOuterRing: 0
-  FieldersOuterMax: 4
+  FieldersOuterMax: 5
   pf: {fileID: 1776799091}
 --- !u!1 &619394800
 GameObject:

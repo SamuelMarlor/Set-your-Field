@@ -23,7 +23,7 @@ public class FielZoneOuterRing : MonoBehaviour
             return;
 
         // Turn RED when 4 fielders are placed
-        if (outer.FieldersOuterRing >= 4)
+        if (outer.FieldersOuterRing >= 5)
         {
             highlight.color = new Color(1f, 0f, 0f, 0.4f);   // RED
         }

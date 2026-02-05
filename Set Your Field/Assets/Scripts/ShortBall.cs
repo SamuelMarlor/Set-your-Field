@@ -6,7 +6,7 @@ public class ShortBallBounce : MonoBehaviour
     public Transform batterPoint;
 
     // Catch system
-    public float catchRadius = 1f;   // how close the ball must be
+    public float catchRadius = 2f;   // how close the ball must be
     public float catchChance = 0.6f;   // 60% chance
     public Transform startPoint;
 
