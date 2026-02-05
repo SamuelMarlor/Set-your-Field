@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4400e82be002c5b4994201d9be58e449
+guid: ec3dbaaeaaed6a8469305ecea7dbe213
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7248192640910546364
-    second: Cartoon-style crickestand_0
+      213: -9048408540420206321
+    second: a thin white ring on_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cartoon-style crickestand_0
+      name: a thin white ring on_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 57
-        width: 957
-        height: 937
+        x: 79
+        y: 48
+        width: 887
+        height: 889
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 44a2de6123f396b90800000000000000
-      internalID: -7248192640910546364
+      spriteID: f0194ad7f589d6280800000000000000
+      internalID: -9048408540420206321
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Cartoon-style crickestand_0: -7248192640910546364
+      a thin white ring on_0: -9048408540420206321
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

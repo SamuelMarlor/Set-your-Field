@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fbdbb015a3cbf524795509ad4994b1c9
+guid: 6a78c1775ef847442a3f96b4687dbc74
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4325274664702921567
-    second: IMG_0015_0
+      213: 8694239480086712902
+    second: a cartoon-style cric_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_0015_0
+      name: a cartoon-style cric_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 1024
-        height: 1024
+        width: 1019
+        height: 1019
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f5b4d992466760c30800000000000000
-      internalID: 4325274664702921567
+      spriteID: 642deba3eb428a870800000000000000
+      internalID: 8694239480086712902
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      IMG_0015_0: 4325274664702921567
+      a cartoon-style cric_0: 8694239480086712902
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
