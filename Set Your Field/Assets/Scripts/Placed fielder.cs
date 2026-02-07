@@ -19,8 +19,12 @@ public class PlacedFielder : MonoBehaviour
         manager.fieldersRemainingText.text = manager.fieldersLeft.ToString();
 
         // Update outer ring count
-        if (outerRing != null)
+        // Update correct ring
+        if (isOuterRing && outerRing != null)
             outerRing.FieldersOuterRing--;
+
+        if (isInnerRing)
+            manager.fieldersLeft++;    // use your actual inner ring counter variable;
 
         // Destroy next frame so the click cannot hit the OuterRing
         Destroy(gameObject, 0.01f);
