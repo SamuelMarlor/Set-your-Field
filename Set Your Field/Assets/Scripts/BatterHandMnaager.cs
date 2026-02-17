@@ -7,14 +7,10 @@ public class BatterHandManager : MonoBehaviour
     public Transform pitch;
     public Transform keeper;
     private Vector3 originalKeeperPos;
-    private Vector3 originalKeeperRot;
-    private Vector3 originalKeeperScale;
 
     void Start()
     {
-        originalKeeperPos = keeper.position;
-        originalKeeperRot = keeper.rotation.eulerAngles;
-        originalKeeperScale = keeper.localScale;
+       
     }
 
     public void SetLeftHand()
@@ -22,7 +18,7 @@ public class BatterHandManager : MonoBehaviour
         isLeftHanded = true;
         ApplyHandedness();
         ApplyRightHandPitchTransform();
-        ApplyRightHandKeeperTransform();
+       
 
 
 
@@ -33,8 +29,7 @@ public class BatterHandManager : MonoBehaviour
         isLeftHanded = false;
         ApplyHandedness();
         ApplyLeftHandPitchTransform();
-        ApplyLeftHandKeeperTransform();
-
+        
 
     }
 
@@ -65,20 +60,7 @@ public class BatterHandManager : MonoBehaviour
         pitch.localScale = new Vector3(4.645042f, 4.296092f, 1f);
     }
 
-    void ApplyLeftHandKeeperTransform()
-    {
-        keeper.position = new Vector3(0.3544338f, 2.166394f, -0.2000004f);
-        keeper.rotation = Quaternion.Euler(0f, 0f, 0f);
-        keeper.localScale = new Vector3(0.1049333f, 0.1108908f, 1f);
-    }
-
-    void ApplyRightHandKeeperTransform()
-    {
-        keeper.position = originalKeeperPos;
-        keeper.rotation = Quaternion.Euler(originalKeeperRot);
-        keeper.localScale = originalKeeperScale;
-    }
-
+   
 
 
 }
