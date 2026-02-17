@@ -1,28 +1,19 @@
 ﻿using UnityEngine;
 
-public class ShortBallBounce : MonoBehaviour
+public class GoodLengthBall : MonoBehaviour
 {
     public float speed = 6f;
     public Transform batterPoint;
+    public Transform startPoint;
 
     // Catch system
-    public float catchRadius = 2f;   // how close the ball must be
-    public float catchChance = 0.6f;   // 60% chance
-    public Transform startPoint;
+    public float catchRadius = 2f;
+    public float catchChance = 0.5f;
 
     private bool hasTriggered = false;
     private bool ballActive = false;
-    public bool isHighBall = false;
-
     private Vector2 direction = Vector2.down;
-
-    public void StartBall()
-    {
-        if (BallTypeManager.instance.selectedBallType != BallTypeManager.BallType.ShortBall)
-            return;
-
-        ballActive = true;
-    }
+    public bool isHighBall = false;
 
     void Update()
     {
@@ -34,63 +25,60 @@ public class ShortBallBounce : MonoBehaviour
         CheckForCatch();
     }
 
-   
+    public void StartBall()
+    {
+        if (BallTypeManager.instance.selectedBallType != BallTypeManager.BallType.GoodLength)
+            return;
+
+        ballActive = true;
+    }
 
     public void ResetBall()
     {
         ballActive = false;
         hasTriggered = false;
 
-        // Move ball back to start
         transform.position = startPoint.position;
-
-        // Reset direction
         direction = Vector2.down;
     }
 
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Batter hits the ball
         if (!hasTriggered && collision.transform == batterPoint)
         {
             hasTriggered = true;
-            ApplyRandomAngle();
+            ApplyGoodLengthHit();
         }
 
+        // Boundary logic
         if (collision.CompareTag("boundary"))
         {
             BallHitBoundary();
         }
-
     }
 
-    void ApplyRandomAngle()
+    void ApplyGoodLengthHit()
     {
-        float angle = GetRandomAngle();
-        direction = Quaternion.Euler(0, 0, angle) * direction;
-
-        // 40% chance the ball goes high
-        isHighBall = Random.value < 0.4f;
+        direction = GetGoodLengthHitDirection() * Random.Range(0.9f, 1.3f);
+        isHighBall = Random.value < 0.3f;   // 30% chance of a high shot
     }
 
-    float GetRandomAngle()
+    Vector2 GetGoodLengthHitDirection()
     {
-        float chance90 = 20f;
-        float chance45 = 30f;
+        float roll = Random.value;
 
-        float roll = Random.Range(0f, 100f);
+        if (roll < 0.4f)
+            return new Vector2(Random.Range(-0.2f, 0.2f), 1f).normalized;
 
-        if (roll < chance90)
-            return Random.value < 0.5f ? 90f : -90f;
+        if (roll < 0.7f)
+            return new Vector2(Random.Range(0.3f, 0.8f), 0.8f).normalized;
 
-        if (roll < chance90 + chance45)
-            return Random.value < 0.5f ? 45f : -45f;
+        if (roll < 0.9f)
+            return new Vector2(Random.Range(-0.8f, -0.3f), 0.5f).normalized;
 
-        else
-            return Random.value < 0.5f ? 135f : -135f;
+        return new Vector2(0, -0.2f).normalized;
     }
-
 
     void CheckForCatch()
     {
@@ -110,7 +98,7 @@ public class ShortBallBounce : MonoBehaviour
                 }
 
                 // OUTER RING FIELDERS
-                if (fielder.isOuterRing)
+                if (isHighBall && fielder.isOuterRing)
                 {
                     TryCatchBall(fielder);
                     return;
@@ -121,7 +109,7 @@ public class ShortBallBounce : MonoBehaviour
 
     void TryCatchBall(PlacedFielder fielder)
     {
-        float roll = Random.value; // 0.0 to 1.0
+        float roll = Random.value;
 
         if (roll <= catchChance)
         {
@@ -131,18 +119,18 @@ public class ShortBallBounce : MonoBehaviour
         else
         {
             Debug.Log("Catch dropped!");
+            ResetBall();   // ⭐ NEW — reset even when dropped
         }
     }
 
     void BallCaught(PlacedFielder fielder)
     {
-        // Stop the ball or destroy it
         ResetBall();
     }
 
     void BallHitBoundary()
     {
-        Debug.Log("Ball hit the boundary!");
+        Debug.Log("boundary!");
         ResetBall();
     }
 }

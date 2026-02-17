@@ -23,6 +23,12 @@ public class OuterRing : MonoBehaviour
 
     void Update()
     {
+        if (BallTypeManager.instance.selectedBallType == BallTypeManager.BallType.None)
+        {
+            Debug.Log("Select a ball type first!");
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             TryPlaceFielder();
@@ -63,7 +69,8 @@ public class OuterRing : MonoBehaviour
         GameObject newFielder = Instantiate(fielderPrefab, worldPos, Quaternion.identity);
         PlacedFielder pf = newFielder.GetComponent<PlacedFielder>();
         pf.manager = manager;
-        pf.outerRing = this;   // ← THIS is the important line
+        pf.isOuterRing = true;
+        pf.isInnerRing = false;   // ← THIS is the important line
 
 
         Vector3 scale = newFielder.transform.localScale;

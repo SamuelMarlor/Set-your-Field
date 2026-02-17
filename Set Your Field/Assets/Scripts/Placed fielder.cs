@@ -23,8 +23,6 @@ public class PlacedFielder : MonoBehaviour
         if (isOuterRing && outerRing != null)
             outerRing.FieldersOuterRing--;
 
-        if (isInnerRing)
-            manager.fieldersLeft++;    // use your actual inner ring counter variable;
 
         // Destroy next frame so the click cannot hit the OuterRing
         Destroy(gameObject, 0.01f);

@@ -24,6 +24,12 @@ public class FielderPlacementManager : MonoBehaviour
 
     void Update()
     {
+        if (BallTypeManager.instance.selectedBallType == BallTypeManager.BallType.None)
+        {
+            Debug.Log("Select a ball type first!");
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -71,7 +77,10 @@ public class FielderPlacementManager : MonoBehaviour
         fieldersPlaced++;
         fieldersLeft--;
         pf.isInnerRing = true;
+        pf.isOuterRing = false;
     }
+
+    public BallManager ballManager;
 
     public void ConfirmFielders()
     {
@@ -81,8 +90,8 @@ public class FielderPlacementManager : MonoBehaviour
             return;
         }
 
-        // All fielders placed — start the ball
-        ballScript.StartBall();
+        // All fielders placed — start the selected ball type
+        ballManager.Confirm();
     }
 
 
