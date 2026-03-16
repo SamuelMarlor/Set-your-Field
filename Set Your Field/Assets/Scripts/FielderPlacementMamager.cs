@@ -30,10 +30,16 @@ public class FielderPlacementManager : MonoBehaviour
             return;
         }
 
+        // Mouse (Editor / PC)
         if (Input.GetMouseButtonDown(0))
         {
+            TryPlaceFielder(Input.mousePosition);
+        }
 
-            TryPlaceFielder();
+        // Touch (iPhone / iPad)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            TryPlaceFielder(Input.GetTouch(0).position);
         }
 
         fieldersRemainingText.text = fieldersLeft.ToString();
@@ -45,37 +51,32 @@ public class FielderPlacementManager : MonoBehaviour
         fieldersPlaced++;
     }
 
-    void TryPlaceFielder()
+    void TryPlaceFielder(Vector2 screenPos)
     {
-        // Global limit
         if (fieldersPlaced >= maxFielders)
             return;
 
-        Vector3 worldPos = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 worldPos = cam.ScreenToWorldPoint(screenPos);
         worldPos.z = 0f;
 
         RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
 
-        // Only place fielders if clicking the INNER RING
         if (hit.collider == null || !hit.collider.CompareTag("InnerRing"))
             return;
 
         GameObject newFielder = Instantiate(fielderPrefab, worldPos, Quaternion.identity);
 
-        // Flip based on batter position
         Vector3 scale = newFielder.transform.localScale;
-        if (newFielder.transform.position.x < batter.position.x)
-            scale.x = Mathf.Abs(scale.x);
-        else
-            scale.x = -Mathf.Abs(scale.x);
+        scale.x = (newFielder.transform.position.x < batter.position.x)
+            ? Mathf.Abs(scale.x)
+            : -Mathf.Abs(scale.x);
 
         newFielder.transform.localScale = scale;
-
-       
 
         SpawnedFielders.Add(newFielder);
         fieldersPlaced++;
         fieldersLeft--;
+
         pf.isInnerRing = true;
         pf.isOuterRing = false;
     }
