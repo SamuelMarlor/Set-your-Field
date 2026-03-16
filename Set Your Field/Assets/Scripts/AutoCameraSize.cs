@@ -2,21 +2,22 @@
 
 public class AutoCameraSize : MonoBehaviour
 {
-    public float referenceWidth = 1920f;
-    public float referenceHeight = 1080f;
+    public float baseSize = 19f;
+    public float referenceAspect = 16f / 9f;
 
-    void Start()
+    void LateUpdate()
     {
-        float targetAspect = referenceWidth / referenceHeight;
-        float windowAspect = (float)Screen.width / Screen.height;
-
+        float currentAspect = (float)Screen.width / Screen.height;
         Camera cam = GetComponent<Camera>();
 
-        if (windowAspect < targetAspect)
+        if (currentAspect < referenceAspect)
         {
-            // Taller screen → zoom OUT
-            float difference = targetAspect / windowAspect;
-            cam.orthographicSize *= difference;
+            float scaleFactor = referenceAspect / currentAspect;
+            cam.orthographicSize = baseSize * scaleFactor;
+        }
+        else
+        {
+            cam.orthographicSize = baseSize;
         }
     }
 }
